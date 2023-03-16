@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: red;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #10d69b;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: wheat;
+  padding: 20px;
+}
+</style>
+</head>
+<body>
+
+
+
+<div class="container">
+  
+    <label for="fname">Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+    <label for="country">Country</label>
+    <select id="country" name="country" >
+    <option value="greece">Greece</option>
+      <option value="australia">Australia</option>
+      <option value="canada">Canada</option>
+      <option value="usa">USA</option>
+    </select>
+
+    <label for="subject">Subject</label>
+    <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+
+    <input type="submit" value="ΥΠΟΒΟΛΗ" onclick="saveFile()">
+  
+</div>
+
+</body>
+<script>   
+    let saveFile = () => {
+    	
+    // Get the data from each element on the form.
+    const name = document.getElementById('fname');
+    const lastname = document.getElementById('lname');
+    const country = document.getElementById('country');
+    const msg = document.getElementById('subject');
+    
+    // This variable stores all the data.
+    let data = 
+        '\r Name: ' + name.value + ' \r\n ' + 
+        'LastName: ' + lastname.value + ' \r\n ' + 
+        'Country: ' + country.value + ' \r\n ' + 
+        'Message: ' + msg.value;
+    
+    // Convert the text to BLOB.
+    const textToBLOB = new Blob([data], { type: 'text/plain' });
+    const sFileName = 'formData.txt';	   // The file to save the data.
+
+    let newLink = document.createElement("a");
+    newLink.download = sFileName;
+
+    if (window.webkitURL != null) {
+        newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+    }
+    else {
+        newLink.href = window.URL.createObjectURL(textToBLOB);
+        newLink.style.display = "none";
+        document.body.appendChild(newLink);
+    }
+
+    newLink.click(); 
+}
+</script>
+</html>
